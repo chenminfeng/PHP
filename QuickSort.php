@@ -29,11 +29,6 @@ function quickSort(&$arr, $left, $right){
     return $arr;
 }
 
-function exchange($x, $y){
-    $arr = [$x, $y];
-    return $arr;
-}
-
 $arr = [1, 8, 6, 3, 5, 7, 15,-1, 5, 7, 111, 999, 58];
 $n = count($arr);
 $arr = quickSort($arr, 0, $n-1);
