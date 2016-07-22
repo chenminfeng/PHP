@@ -5,7 +5,7 @@
  * Date: 2016/7/21
  * Time: 17:15
  */
-function quickSort(&$arr, $left, $right){
+function quickSort(array &$arr, $left, $right){
     $tmp = $right;
     $i = $left;
     while ($i < $tmp){
