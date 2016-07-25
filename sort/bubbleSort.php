@@ -11,12 +11,10 @@
  */
 function bubbleSort($arr){
     $notChangeIndex = count($arr) - 1;      //从该下标开始，后面的数不再发生交换
-    $count = 0;
     while($notChangeIndex != 0) {
         $times = $notChangeIndex;
         $notChangeIndex = 0;
         for ($i = 0; $i < $times;$i++){
-            $count ++;
             if($arr[$i] > $arr[$i+1]){
                 $tmp = $arr[$i + 1];
                 $arr[$i+1] = $arr[$i];
