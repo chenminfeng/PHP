@@ -5,7 +5,6 @@
  * Date: 2016/7/22
  * Time: 14:16
  */
-
 function mergeSort(array $arr, $left, $right){
     if($left == $right){
         return $arr;
