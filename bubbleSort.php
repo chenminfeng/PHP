@@ -12,30 +12,25 @@
  * @param $arr
  */
 function bubbleSort($arr){
-    $maxIndex = -1;                         //不再发生交换的数前面的数中，最大的数的下标
     $notChangeIndex = count($arr) - 1;      //从该下标开始，后面的数不再发生交换
+    $count = 0;
     while($notChangeIndex != 0) {
         $times = $notChangeIndex;
         $notChangeIndex = 0;
-        $maxIndex = 0;
         for ($i = 0; $i < $times;$i++){
+            $count ++;
             if($arr[$i] > $arr[$i+1]){
                 $tmp = $arr[$i + 1];
                 $arr[$i+1] = $arr[$i];
                 $arr[$i] = $tmp;
-
                 $notChangeIndex = $i + 1;
-                if($arr[$maxIndex] < $arr[$i]){
-                    $maxIndex = $i;
-                }
             }
         }
     }
     return $arr;
 }
 
-
-$arr = [1, 8, 6, 3, 5, 7, 15,-1, 5, 7, 111, 999, 58];
+$arr = [40,81,25,38,85,31,62,21,43,79];
 $n = count($arr);
 $arr = bubbleSort($arr);
 
