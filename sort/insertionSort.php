@@ -5,7 +5,6 @@
  * Date: 2016/7/22
  * Time: 11:53
  */
-
 function insertionSort(array $arr){
     $n = count($arr);
     for($i = 1; $i < $n; $i++){
