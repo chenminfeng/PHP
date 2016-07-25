@@ -5,7 +5,6 @@
  * Date: 2016/7/25
  * Time: 9:56
  */
-
 function selectionSort($arr){
     $n = count($arr);
     for($i = 0; $i < $n; $i++){
