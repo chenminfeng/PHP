@@ -11,7 +11,7 @@ include "File.php";
 /**
  * @param $dir 遍历的文件路径
  * @param $number 记录该dir的缩进格式
- * @param $arr 存放各个文件的各个属性
+ * @param $arr 存放各个文件的各个属性的对象
  */
 function fileTraversal($dir, $number, &$arr){
     $d = opendir($dir);
