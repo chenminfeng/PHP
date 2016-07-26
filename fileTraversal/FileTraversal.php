@@ -12,8 +12,10 @@ include "File.php";
  * @param $dir 遍历的文件路径
  * @param $number 记录该dir的缩进格式
  * @param $arr 存放各个文件的各个属性的对象
+ * @param $size 存放文件夹的大小
+ * @return mixed 文件夹的大小
  */
-function fileTraversal($dir, $number, &$arr){
+function fileTraversal($dir, $number, &$arr, $size){
     $d = opendir($dir);
 
     while (($content = readdir($d)) != false) {
@@ -23,17 +25,20 @@ function fileTraversal($dir, $number, &$arr){
             $contentExactly = new File();
             $contentExactly->setName($content);
             $contentExactly->setBlankNumber($number+1);
+            $contentExactly->setModifyTime(date("F d Y H:i:s.", filemtime($path)));
 
             if (is_dir($path)) {
-                array_push($arr, $contentExactly);
-                fileTraversal($path, $number + 1, $arr);
+                $arr[$path] = $contentExactly;
+                $size += fileTraversal($path, $number + 1, $arr, 0);
             }else{
-                $contentExactly->setModifyTime(date("F d Y H:i:s.", filemtime($path)));
                 $contentExactly->setSize(filesize($path));
-                array_push($arr, $contentExactly);
+                $arr[$path] = $contentExactly;
+                $size += $contentExactly->getSize(filesize($path));
             }
         }
     }
+    $arr[$dir]->setSize($size);
+    return $size;
 }
 
 /**
@@ -43,19 +48,15 @@ function fileTraversal($dir, $number, &$arr){
  */
 function show($arr){
     $n = count($arr);
-    for ($i = 0; $i < $n; $i++){
+    foreach ($arr as $key => $value){
         $content = '';
-        $number = $arr[$i]->getBlankNumber();
+        $number = $arr[$key]->getBlankNumber();
         for ($j = 0; $j < $number; $j++){
             $content .= '----';
         }
-        $content = $content . $arr[$i]->getName();
-        $size = '';
-        $modifyTime = 'NULL';
-        if ($arr[$i]->getSize() != ""){
-            $size = $arr[$i]->getSize();
-            $modifyTime = $arr[$i]->getModifyTime();
-        }
+        $content = $content . $arr[$key]->getName();
+        $size = $arr[$key]->getSize();
+        $modifyTime = $arr[$key]->getModifyTime();
         echo "$content" ."  modifyTime : $modifyTime" .  "  size : $size" . 'B<br/>';
     }
 }
@@ -67,12 +68,14 @@ function show($arr){
 function main($dir){
     $arr = [];
     $dir = "/mnt/hgfs/project/learn/fileTraversal/data for test";
+    @opendir($dir) or die("该目录不存在");
     $contentExactly = new File();
     $contentExactly->setName($dir);
     $contentExactly->setBlankNumber(0);
 
-    array_push($arr, $contentExactly);
-    fileTraversal($dir, 0, $arr);
+    $arr[$dir] = $contentExactly;
+//    array_push($arr, $contentExactly);
+    fileTraversal($dir, 0, $arr, 0);
 
     show($arr);
 }
